@@ -59,18 +59,19 @@ const DummyRecipe: Recipe = {
   },
 };
 
+type IngredientsState = (boolean | "disabled" | undefined)[];
+
 const Recipe = ({
   recipeId,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
 
   // Magic code to make the checkboxes work with localStorage
-  const [ingredients, setIngredients] = useState<
-    (boolean | "disabled" | undefined)[]
-  >([]);
-  const [_ingredients, _setIngredients] = useLocalStorage<
-    (boolean | "disabled" | undefined)[]
-  >(`ingredient-state-${router.query.recipeId}`, []);
+  const [ingredients, setIngredients] = useState<IngredientsState>([]);
+  const [_ingredients, _setIngredients] = useLocalStorage<IngredientsState>(
+    `ingredients-state-${router.query.recipeId}`,
+    []
+  );
 
   useEffect(() => {
     setIngredients(_ingredients);
