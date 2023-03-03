@@ -7,6 +7,7 @@ import { PlusIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import useLocalStorage from "~/hooks/useLocalStorage";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Navbar from "~/components/Navbar";
 
 interface Recipe {
   name: string;
@@ -83,9 +84,7 @@ const Recipe = ({
 
   return (
     <>
-      <div className="bg-slate-200 p-4 text-center text-gray-500">
-        Navbar coming soon...
-      </div>
+      <Navbar />
       <main className="bg-neutral-50">
         <div className="mx-auto min-h-screen max-w-2xl bg-white shadow">
           <img
@@ -176,7 +175,9 @@ const Recipe = ({
               <h2 className="text-lg font-bold">Instructions</h2>
               <ol className="mt-2 list-decimal space-y-2 pl-10">
                 {DummyRecipe.instructions.map((instruction, index) => (
-                  <li key={index}>{instruction}</li>
+                  <li key={index} className="pl-1">
+                    {instruction}
+                  </li>
                 ))}
               </ol>
             </div>
