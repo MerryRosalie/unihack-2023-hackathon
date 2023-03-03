@@ -2,9 +2,22 @@
 const config = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        helvetica: [
+          "Helvetica",
+          '"Segoe UI"',
+          '"Helvetica Neue"',
+          "Arial",
+          "sans-serif",
+        ],
+      },
+      backgroundColor: {
+        light: "#f7f1f1",
+      },
+    },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };
 
 module.exports = config;
