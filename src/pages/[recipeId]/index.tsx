@@ -8,6 +8,7 @@ import useLocalStorage from "~/hooks/useLocalStorage";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Navbar from "~/components/Navbar";
+import Timer from "~/components/Timer";
 
 interface Recipe {
   name: string;
@@ -175,9 +176,30 @@ const Recipe = ({
               <h2 className="text-lg font-bold">Instructions</h2>
               <ol className="mt-2 list-decimal space-y-2 pl-10">
                 {DummyRecipe.instructions.map((instruction, index) => (
-                  <li key={index} className="pl-1">
-                    {instruction}
-                  </li>
+                  <>
+                    <li key={index} className="pl-1">
+                      {instruction}
+                    </li>
+                    {
+                      // This is a hacky way to add a timer to the recipe
+                      // I'm not sure how to do this in a better way
+                      (() => {
+                        // Add a timer if the string contains "minutes" or "seconds"
+                        // Use regex to find the number
+                        const minutes = instruction.match(/(\d+) minutes?/);
+                        const seconds = instruction.match(/(\d+) seconds?/);
+                        let total_seconds = 0;
+                        if (minutes)
+                          total_seconds += parseInt(minutes[1] || "") * 60;
+                        if (seconds)
+                          total_seconds += parseInt(seconds[1] || "");
+                        return (
+                          total_seconds > 0 && <Timer seconds={total_seconds} />
+                        );
+                      })()
+                    }
+                    {/* {index === 2 && <Timer seconds={30} />} */}
+                  </>
                 ))}
               </ol>
             </div>
