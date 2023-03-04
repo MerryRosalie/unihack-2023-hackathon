@@ -2,22 +2,46 @@ import dynamic from "next/dynamic";
 import React, { useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 
+interface ItemInterface {
+  id: number,
+  content: string
+}
+
+type ItemArrayInterface = ItemInterface[];
+
+interface ColumnInterface {
+  RECOMMENDED: Number[];
+  MONDAY: Number[];
+  TUESDAY: Number[];
+  WEDNESDAY: Number[];
+  THURSDAY: Number[];
+  FRIDAY: Number[];
+  SATURDAY: Number[];
+  SUNDAY: Number[];
+  [key: string]: any;
+}
+
+interface StateInterface {
+  items: ItemArrayInterface,
+  columns: ColumnInterface
+}
+
 const Column = dynamic(() => import("../components/Column"), { ssr: false });
 
 const reorderColumnList = (
-  itemsArray: any,
+  itemsArray: Number[],
   startIndex: number,
   endIndex: number
 ) => {
   const newItems = Array.from(itemsArray);
   const [removed] = newItems.splice(startIndex, 1);
-  newItems.splice(endIndex, 0, removed);
+  newItems.splice(endIndex, 0, removed as Number);
 
   return newItems;
 };
 
 const PlanTable = () => {
-  const [state, setState] = useState({
+  const [state, setState] = useState<StateInterface>({
     items: [
       { id: 0, content: "Fried Rice" },
       { id: 1, content: "Fried Rice" },
@@ -50,8 +74,8 @@ const PlanTable = () => {
       return;
     }
 
-    const sourceArray = state.columns[source.droppableId];
-    const destArray = state.columns[destination.droppableId];
+    const sourceArray = state.columns[source.droppableId] as Number[];
+    const destArray = state.columns[destination.droppableId] as Number[];
 
     if (source.droppableId === destination.droppableId) {
       const newItems = reorderColumnList(
@@ -76,7 +100,7 @@ const PlanTable = () => {
     const [removed] = newSourceArray.splice(source.index, 1);
 
     const newEndArray = Array.from(destArray);
-    newEndArray.splice(destination.index, 0, removed);
+    newEndArray.splice(destination.index, 0, removed as Number);
 
     const newState = {
       ...state,
@@ -94,7 +118,7 @@ const PlanTable = () => {
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="m-auto flex p-4">
         {Object.keys(state.columns).map((column) => {
-          const items = state.columns[column].map((itemId) =>
+          const items = state.columns[column].map((itemId: number) =>
             state.items.find((item) => item.id === itemId)
           );
           return <Column key={column} column={column} items={items} />;

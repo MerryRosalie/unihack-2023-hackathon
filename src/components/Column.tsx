@@ -15,11 +15,7 @@ const Column = ({ column, items }: any) => {
             {...droppableProvided.droppableProps}
           >
             {items.map((item: any, index: number) => (
-              <Draggable
-                key={item.id}
-                draggableId={`${item.id}`}
-                index={index}
-              >
+              <Draggable key={item.id} draggableId={`${item.id}`} index={index}>
                 {(draggableProvided: any, draggableSnapshot) => (
                   <div
                     className="mb-1 flex h-[72px] bg-emerald-600 p-1.5 text-white shadow-md"
