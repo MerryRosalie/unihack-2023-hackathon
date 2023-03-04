@@ -1,12 +1,13 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon, UserIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 const Navbar = () => {
   const navigations = [
-    { name: "Planner", href: "#" },
-    { name: "Recipe", href: "#" },
-    { name: "Stats", href: "#" },
+    { name: "Planner", href: "/plan" },
+    { name: "Recipes", href: "/recipes" },
+    { name: "Stats", href: "/" },
   ];
 
   function classNames(...classes: any) {
@@ -32,7 +33,9 @@ const Navbar = () => {
                   </Disclosure.Button>
                 </div>
                 <div className="flex flex-shrink-0 items-center">
-                  <h1 className="font-medium">🍐 FoodPlan</h1>
+                  <h1 className="font-medium">
+                    <Link href="/">🍐 FoodPlan</Link>
+                  </h1>
                 </div>
                 <div className="hidden md:ml-6 md:flex md:space-x-8">
                   {navigations.map((item) => (
