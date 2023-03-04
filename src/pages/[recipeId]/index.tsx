@@ -102,6 +102,12 @@ const Recipe = ({
     _setExtraIngredientsState(extraIngredientsState);
   }, [extraIngredients, extraIngredientsState]);
 
+  const [instructionState, setInstructionState] = useState<boolean[]>([]);
+
+  useEffect(() => {
+    setInstructionState(DummyRecipe.instructions.map(() => false));
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -282,12 +288,33 @@ const Recipe = ({
               </ul>
             </div>
             <div className="mt-4 flex flex-col">
-              <h2 className="text-lg font-bold">Instructions</h2>
+              <h2 className="text-lg font-bold">
+                Instructions{" "}
+                {
+                  <span className="text-xs font-normal text-gray-400">
+                    Click to cross off
+                  </span>
+                }
+              </h2>
               <ol className="mt-2 list-decimal space-y-2 pl-10">
                 {DummyRecipe.instructions.map((instruction, index) => (
                   <React.Fragment key={index}>
                     <li key={index} className="pl-1">
-                      {instruction}
+                      <button
+                        className={`text-left ${
+                          instructionState[index]
+                            ? "line-through"
+                            : "no-underline"
+                        }`}
+                        onClick={() => {
+                          const newInstructionState = [...instructionState];
+                          newInstructionState[index] =
+                            !newInstructionState[index];
+                          setInstructionState(newInstructionState);
+                        }}
+                      >
+                        {instruction}
+                      </button>
                     </li>
                     {
                       // This is a hacky way to add a timer to the recipe
