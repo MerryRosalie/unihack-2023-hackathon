@@ -124,16 +124,17 @@ const Recipe = ({
             </h1>
             {/* Tags */}
             <h2 className="mx-auto mt-2 w-fit space-x-2 text-lg font-bold text-neutral-700">
-              {DummyRecipe.tags.map((tag, index) => {
-                return (
-                  <span
-                    key={`${index}-${tag}`}
-                    className="inline-block rounded-full bg-neutral-200 px-3 py-1 text-sm font-medium text-neutral-900"
-                  >
-                    {tag}
-                  </span>
-                );
-              })}
+              {DummyRecipe.tags &&
+                DummyRecipe.tags.map((tag, index) => {
+                  return (
+                    <span
+                      key={`${index}-${tag}`}
+                      className="inline-block rounded-full bg-neutral-200 px-3 py-1 text-sm font-medium text-neutral-900"
+                    >
+                      {tag}
+                    </span>
+                  );
+                })}
             </h2>
             <div className="mt-4 flex flex-row justify-center space-x-8 text-neutral-700">
               <div className="flex flex-col items-center">
@@ -287,11 +288,11 @@ const Recipe = ({
                 </li>
               </ul>
             </div>
-            <div className="mt-4 flex flex-col">
+            <div className="group mt-4 flex flex-col">
               <h2 className="text-lg font-bold">
                 Instructions{" "}
                 {
-                  <span className="text-xs font-normal text-gray-400">
+                  <span className="invisible text-xs font-normal text-gray-400 group-hover:visible">
                     Click to cross off
                   </span>
                 }
@@ -330,7 +331,8 @@ const Recipe = ({
                         if (seconds)
                           total_seconds += parseInt(seconds[1] || "");
                         return (
-                          total_seconds > 0 && (
+                          total_seconds > 0 &&
+                          !instructionState[index] && (
                             <Timer
                               seconds={total_seconds}
                               key={`timer-${index}`}
