@@ -4,7 +4,11 @@ import { DragDropContext } from "react-beautiful-dnd";
 
 const Column = dynamic(() => import("../components/Column"), { ssr: false });
 
-const reorderColumnList = (itemsArray: any, startIndex: number, endIndex: number) => {
+const reorderColumnList = (
+  itemsArray: any,
+  startIndex: number,
+  endIndex: number
+) => {
   const newItems = Array.from(itemsArray);
   const [removed] = newItems.splice(startIndex, 1);
   newItems.splice(endIndex, 0, removed);
@@ -22,16 +26,16 @@ const PlanTable = () => {
       { id: 4, content: "Fried Rice" },
     ],
     columns: {
-      "RECOMMENDED": [0,1,2,3,4],
-      "MONDAY": [],
-      "TUESDAY": [],
-      "WEDNESDAY": [],
-      "THURSDAY": [],
-      "FRIDAY": [],
-      "SATURDAY": [],
-      "SUNDAY": [],
-    }
-});
+      RECOMMENDED: [0, 1, 2, 3, 4],
+      MONDAY: [],
+      TUESDAY: [],
+      WEDNESDAY: [],
+      THURSDAY: [],
+      FRIDAY: [],
+      SATURDAY: [],
+      SUNDAY: [],
+    },
+  });
 
   const onDragEnd = (result: any) => {
     const { destination, source } = result;
@@ -39,7 +43,10 @@ const PlanTable = () => {
     // If user tries to drop in an unknown destination
     if (!destination) return;
 
-    if (destination.droppableId === source.droppableId && destination.index === source.index) {
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
       return;
     }
 
@@ -63,14 +70,14 @@ const PlanTable = () => {
       setState(newState);
       return;
     }
-    
+
     // If the user moves from one column to another
     const newSourceArray = Array.from(sourceArray);
     const [removed] = newSourceArray.splice(source.index, 1);
-    
+
     const newEndArray = Array.from(destArray);
     newEndArray.splice(destination.index, 0, removed);
-    
+
     const newState = {
       ...state,
       columns: {
@@ -79,20 +86,22 @@ const PlanTable = () => {
         [destination.droppableId]: newEndArray,
       },
     };
-    
+
     setState(newState);
   };
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex p-4 m-auto">
+      <div className="m-auto flex p-4">
         {Object.keys(state.columns).map((column) => {
-          const items = state.columns[column].map((itemId) => state.items.find(item => item.id === itemId));
+          const items = state.columns[column].map((itemId) =>
+            state.items.find((item) => item.id === itemId)
+          );
           return <Column key={column} column={column} items={items} />;
         })}
       </div>
     </DragDropContext>
   );
-}
+};
 
 export default PlanTable;

@@ -8,11 +8,11 @@ const Navbar = () => {
     { name: "Recipe", href: "#" },
     { name: "Stats", href: "#" },
   ];
-  
+
   function classNames(...classes: any) {
     return classes.filter(Boolean).join(" ");
   }
-  
+
   return (
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }) => (
@@ -183,6 +183,6 @@ const Navbar = () => {
       )}
     </Disclosure>
   );
-}
+};
 
 export default Navbar;

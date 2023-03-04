@@ -1,3 +1,6 @@
+## Documentation
+https://starliteproject.dev/lib/index.html
+
 ## Installation
 
 Install poetry:
