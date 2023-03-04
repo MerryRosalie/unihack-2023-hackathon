@@ -6,7 +6,7 @@ import Link from "next/link";
 const Navbar = () => {
   const navigations = [
     { name: "Planner", href: "/plan" },
-    { name: "Recipe", href: "/fried-rice" },
+    { name: "Recipes", href: "/recipes" },
     { name: "Stats", href: "/" },
   ];
 

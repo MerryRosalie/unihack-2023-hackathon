@@ -1,0 +1,176 @@
+[
+    {
+        "name": "Fried Rice",
+        "id": "fried-rice",
+        "image": "/fried_rice.jpg",
+        "prep_time": 5,
+        "cook_time": 10,
+        "servings": 4,
+        "ingredients": [
+          "⅔ cup chopped baby carrots",
+          "½ cup frozen green peas",
+          "2 tablespoons vegetable oil",
+          "1 clove garlic, minced, or to taste (Optional)",
+          "2 large eggs",
+          "3 cups leftover cooked white rice",
+          "1 tablespoon soy sauce, or more to taste",
+          "2 teaspoons sesame oil, or to taste"
+        ],
+        "instructions": [
+          "Assemble Ingredients.",
+          "Place carrots in a small saucepan and cover with water. Bring to a low boil and cook for 3 to 5 minutes. Stir in peas, then immediately drain in a colander.",
+          "Heat a wok over high heat. Pour in vegetable oil, then stir in carrots, peas, and garlic; cook for about 30 seconds. Add eggs; stir quickly to scramble eggs with vegetables.",
+          "Stir in cooked rice. Add soy sauce and toss rice to coat. Drizzle with sesame oil and toss again.",
+          "Serve immediately."
+        ],
+        "nutrition": {
+          "calories": 152,
+          "fat": 7,
+          "carbs": 19,
+          "protein": 4
+        },
+        "tags": ["Vegetarian", "Easy", "Healthy"]
+      },
+      {
+        "name": "Copycat KFC™ Original-Style Chicken",
+        "id": "kfc-original-chicken",
+        "image": "https://images-gmi-pmc.edge-generalmills.com/6fbc6859-e2b1-499d-b0fa-ada600c9cc3f.jpg",
+        "prep_time": 20,
+        "cook_time": 40,
+        "servings": 4,
+        "ingredients": [
+            "1 tablespoon paprika",
+            "2 teaspoons onion salt",
+            "1 teaspoon chili powder",
+            "1 teaspoon black pepper",
+            "1/2 teaspoon celery salt",
+            "1/2 teaspoon dried sage",
+            "1/2 teaspoon garlic powder",
+            "1/2 teaspoon ground allspice",
+            "1/2 teaspoon dried oregano",
+            "1/2 teaspoon dried basil",
+            "1/2 teaspoon dried marjoram",
+            "1 1/2 cups Gold Medal™ all-purpose flour",
+            "1 tablespoon brown sugar",
+            "1 tablespoon kosher salt",
+            "1 whole chicken (2 breasts, 2 thighs, 2 drumsticks, 2 wings)",
+            "1 egg white",
+            "2 quarts neutral oil, for frying"
+        ],
+        "instructions": [
+            "Preheat fryer to 350°F. Thoroughly mix together all spices.",
+            "Combine spices with flour, brown sugar and salt.",
+            "Dip chicken pieces in egg white to lightly coat them, then transfer to flour mixture. Turn a few times and make sure the flour mix is really stuck to the chicken. Repeat with all the chicken pieces.",
+            "Let chicken pieces rest for 5 minutes so crust has a chance to dry a bit.",
+            "Fry chicken in batches. Breasts and wings should take 12-14 minutes, and legs and thighs will need a few more minutes. Chicken pieces are done when a meat thermometer inserted into the thickest part reads 165°F.",
+            "Let chicken drain on a few paper towels when it comes out of the fryer. Serve hot."
+        ],
+        "nutrition": {
+          "calories": 418,
+          "fat": 21.7,
+          "carbs": 15.4,
+          "protein": 40.5
+        },
+        "tags": []
+      },
+      {
+        "name": "Full English Breakfast",
+        "id": "english-breakfast",
+        "image": "https://iamafoodblog.b-cdn.net/wp-content/uploads/2019/02/full-english-7355w-2-1024x683.jpg",
+        "prep_time": 5,
+        "cook_time": 25,
+        "servings": 2,
+        "ingredients": [
+            "1 can beans Heinz preferred",
+            "4 links sausages breakfast sausage preferred",
+            "4 slices back bacon or Irish bacon",
+            "4 slices black pudding optional... some say",
+            "1 cup mushrooms halved or sliced",
+            "2 small tomatoes halved",
+            "4 slices bread",
+            "4 eggs"
+        ],
+        "instructions": [
+            "Heat up the beans over low in a small pot. Keep warm on low.",
+            "Cook the sausages over medium to medium low heat, turning occasionally, until brown and cooked through. In the same pan, cook the bacon, flipping as needed. Fry the blood pudding slices over medium heat for 3-4 minutes per side.",
+            "In another pan, heat up a bit of oil and cook the mushrooms, without moving, until brown and caramelized. Remove from the pan, then sear the cut side of the tomato briefly. Remove from the pan, season everything with salt and pepper.",
+            "Wipe the pan down and heat up a bit of oil or butter over medium heat. Fry the bread until golden, flipping and adding more oil or butter as needed. Remove and set aside. Finally, fry the eggs to your liking. Plate everything up: sausages, bacon, black pudding, mushrooms, tomato, bread, and eggs. Enjoy immediately!"
+        ],
+        "nutrition": {
+          "calories": 1684,
+          "fat": 116.8,
+          "carbs": 73.4,
+          "protein": 84.8
+        },
+        "tags": ["Brunch"]
+      },
+      {
+        "name": "Homemade Beef Burger",
+        "id": "beef-burger",
+        "image": "https://www.simplyrecipes.com/thmb/CWzxvl8dpC_zkjjRqEE6fBCS6DQ=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/Simply-Recipes-Homemade-Pizza-Dough-Lead-Shot-1c-c2b1885d27d4481c9cfe6f6286a64342.jpg",
+        "prep_time": 20,
+        "cook_time": 17,
+        "servings": 4,
+        "ingredients": [
+            "½ tbsp olive oil",
+            "1 onion, peeled and finely chopped",
+            "1 x 500g pack British Beef Steak Mince 15% fat",
+            "1 tsp mixed dried herbs",
+            "1 egg, beaten",
+            "4 slices mature Cheddar (optional)",
+            "4 white rolls",
+            "few round lettuce leaves, torn",
+            "1 beef tomato, sliced",
+            "ketchup, to serve (optional)"
+        ],
+        "instructions": [
+            "Heat the olive oil in a frying pan, add the onion and cook for 5 minutes until softened and starting to turn golden. Set aside.",
+            "In a bowl, combine the beef mince with the herbs and the egg. Season, add the onions and mix well. Using your hands, shape into 4 patties.",
+            "Cook the burgers on a preheated barbecue or griddle for 5-6 minutes on each side. While the second side is cooking, lay a slice of cheese on top to melt slightly (if using).",
+            "Meanwhile, lightly toast the cut-sides of the buns on the barbecue. Fill with the lettuce, burgers and tomato slices. Serve with ketchup, if you like."
+        ],
+        "nutrition": {
+          "calories": 472,
+          "fat": 26,
+          "carbs": 28.8,
+          "protein": 31.8
+        },
+        "tags": []
+      },
+      {
+        "name": "Homemade Sushi",
+        "id": "sushi",
+        "image": "https://www.allrecipes.com/thmb/qFDTGuUKyX_TCZ5WqmBUuhT69l4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/24228-Sushi-roll-ddmfs-4x3-2914-1839f746d9334814a7a5d93ed45ba082.jpg",
+        "prep_time": 40,
+        "cook_time": 25,
+        "servings": 8,
+        "ingredients": [
+            "1 ⅓ cups water",
+            "⅔ cup uncooked short-grain white rice",
+            "3 tablespoons rice vinegar",
+            "3 tablespoons white sugar",
+            "1 ½ teaspoons salt",
+            "4 sheets nori seaweed sheets",
+            "½ pound imitation crabmeat, flaked",
+            "1 avocado - peeled, pitted, and sliced",
+            "½ cucumber, peeled, cut into small strips",
+            "2 tablespoons pickled ginger"
+        ],
+        "instructions": [
+            "Preheat the oven to 300 degrees F (150 degrees C).",
+            "Bring water to a boil in a medium pot; stir in rice. Reduce heat to medium-low, cover, and simmer until rice is tender and water has been absorbed, 20 to 25 minutes.",
+            "Mix rice vinegar, sugar, and salt in a small bowl. Gently stir into cooked rice in the pot and set aside.",
+            "Lay nori sheets on a baking sheet.",
+            "Heat nori in the preheated oven until warm, 1 to 2 minutes.",
+            "Center 1 nori sheet on a bamboo sushi mat. Use wet hands to spread a thin layer of rice on top. Arrange 1/4 of the crabmeat, avocado, cucumber, and pickled ginger over rice in a line down the center. Lift one end of the mat and roll it tightly over filling to make a complete roll. Repeat with remaining ingredients.",
+            "Use a wet, sharp knife to cut each roll into 4 to 6 slices."
+        ],
+        "nutrition": {
+          "calories": 152,
+          "fat": 4,
+          "carbs": 26,
+          "protein": 4
+        },
+        "tags": []
+      }
+]

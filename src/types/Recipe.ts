@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const RecipeSchema = z.object({
   name: z.string(),
+  id: z.string(),
   image: z.string(),
   prep_time: z.number(),
   cook_time: z.number(),
