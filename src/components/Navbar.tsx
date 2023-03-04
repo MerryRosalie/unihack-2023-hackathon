@@ -1,18 +1,18 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon, UserIcon } from "@heroicons/react/24/outline";
-
-const navigations = [
-  { name: "Planner", href: "#" },
-  { name: "Recipe", href: "#" },
-  { name: "Stats", href: "#" },
-];
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(" ");
-}
+import { Bars3Icon, XMarkIcon, UserIcon } from "@heroicons/react/24/outline";
 
 const Navbar = () => {
+  const navigations = [
+    { name: "Planner", href: "#" },
+    { name: "Recipe", href: "#" },
+    { name: "Stats", href: "#" },
+  ];
+  
+  function classNames(...classes: any) {
+    return classes.filter(Boolean).join(" ");
+  }
+  
   return (
     <Disclosure as="nav" className="bg-white shadow">
       {({ open }) => (

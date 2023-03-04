@@ -1,13 +1,11 @@
-import { type NextPage } from "next";
+import React, { useState } from "react";
 import Layout from "~/components/Layout";
-import Navbar from "~/components/Navbar";
+import PlanTable from "~/components/PlanTable";
 
-const Plan: NextPage = () => {
+export default function Plan() {
   return (
     <Layout>
-      <></>
+      <PlanTable />
     </Layout>
   );
-};
-
-export default Plan;
+}
