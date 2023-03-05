@@ -14,7 +14,7 @@ const RecipesPage = () => {
                 <img
                   src={recipe.image}
                   alt={recipe.name}
-                  className="aspect-video"
+                  className="aspect-video object-cover"
                 />
                 <h2 className="mt-1 text-center text-xl font-bold text-neutral-700">
                   {recipe.name}

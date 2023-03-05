@@ -1,4 +1,8 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next/types";
+import {
+  GetStaticPaths,
+  GetStaticProps,
+  InferGetStaticPropsType,
+} from "next/types";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import useLocalStorage from "~/hooks/useLocalStorage";
 import { useRouter } from "next/router";
@@ -8,12 +12,13 @@ import Timer from "~/components/Timer";
 import React from "react";
 import { Recipe } from "~/types/Recipe";
 import recipes from "~/recipes.json";
+import Head from "next/head";
 
 type IngredientsState = (boolean | "disabled" | undefined)[];
 
 const Recipe = ({
   recipeObj,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
 
   // Magic code to make the checkboxes work with localStorage
@@ -63,13 +68,18 @@ const Recipe = ({
 
   return (
     <>
+      <Head>
+        <title>{recipeObj.name}</title>
+        <meta property="og:title" content={recipeObj.name} />
+        <meta property="og:image" content={recipeObj.image} />
+      </Head>
       <Navbar />
       <main className="bg-neutral-50">
         <div className="mx-auto min-h-screen max-w-2xl bg-white shadow">
           <img
             src={recipeObj.image}
             alt={recipeObj.name}
-            className="aspect-video w-full"
+            className="aspect-video w-full object-cover"
           />
           <div className="p-10">
             <h1 className="text-center text-3xl font-bold">{recipeObj.name}</h1>
@@ -324,10 +334,21 @@ const Recipe = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps<{
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: recipes.map((recipe) => ({
+      params: {
+        recipeId: recipe.id,
+      },
+    })),
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps: GetStaticProps<{
   recipeObj: Recipe;
 }> = async (context) => {
-  const recipeId = context.query.recipeId as string;
+  const recipeId = context.params?.recipeId as string;
 
   // Get corresponding recipe from recipes json file
   const recipeObj = recipes.find((recipe) => recipe.id === recipeId) as Recipe;
@@ -336,6 +357,7 @@ export const getServerSideProps: GetServerSideProps<{
     props: {
       recipeObj,
     },
+    revalidate: 1,
   };
 };
 
