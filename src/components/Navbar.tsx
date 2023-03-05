@@ -7,7 +7,11 @@ const Navbar = () => {
   const navigations = [
     { name: "Planner", href: "/plan" },
     { name: "Recipes", href: "/recipes" },
-    { name: "Stats", href: "/" },
+    { name: "Analyze", href: "/analyze" },
+    {
+      name: "GitHub",
+      href: "https://github.com/MerryRosalie/unihack-2023-hackathon",
+    },
   ];
 
   function classNames(...classes: any) {
