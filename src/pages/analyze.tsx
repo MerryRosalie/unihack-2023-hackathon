@@ -75,7 +75,7 @@ export default function Analyze() {
 
       try {
         const response = await fetch(
-          `https://api.spoonacular.com/food/images/analyze?apiKey=${process.env.IMAGE_RECOGNITION_API_KEY}`,
+          `https://api.spoonacular.com/food/images/analyze?apiKey=${process.env.NEXT_PUBLIC_IMAGE_RECOGNITION_API_KEY}`,
           {
             method: "POST",
             body: formData,
