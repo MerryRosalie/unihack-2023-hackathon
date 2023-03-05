@@ -102,7 +102,7 @@ const PlanTable = () => {
       console.log(Object.is(storedMealPlan, blankPlan));
       if (!Object.is(storedMealPlan, blankPlan) && storedMealPlan) {
         setState(JSON.parse(storedMealPlan));
-      } else if (!regenerate) {
+      } else {
         // Api call to get a weekly meal plan based on calories and diet specified by the user
         let calories = 2000;
         let diet = "vegetarian";
