@@ -1,4 +1,5 @@
 import { Console } from "console";
+import { BLOCKED_PAGES } from "next/dist/shared/lib/constants";
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
@@ -63,15 +64,9 @@ const reorderColumnList = (
 
 const PlanTable = () => {
   const [state, setState] = useState<StateInterface>({
-    items: [
-      { id: 0, title: "Fried Rice" },
-      { id: 1, title: "Fried Rice" },
-      { id: 2, title: "Fried Rice" },
-      { id: 3, title: "Fried Rice" },
-      { id: 4, title: "Fried Rice" },
-    ],
+    items: [],
     columns: {
-      UNPLANNED: [0, 1, 2, 3, 4],
+      UNPLANNED: [],
       MONDAY: [],
       TUESDAY: [],
       WEDNESDAY: [],
@@ -84,36 +79,61 @@ const PlanTable = () => {
 
   const [regenerate, setRegenerate] = useState(true);
 
+
   useEffect(() => {
     const fetchMealPlan = async () => {
-      // Api call to get a weekly meal plan based on calories and diet specified by the user
-      let calories = 2000;
-      let diet = "vegetarian";
-      let plan: any = await fetch('https://api.spoonacular.com/mealplanner/generate?apiKey=aae67d05b464460e9bd6d10b74fb0940&timeFrame=week&targetCalories=' + calories + '&diet=' + diet, {
-        method: 'GET',
-        redirect: 'follow'
-      });
-      plan = await plan.json();
-      let newItems = [] as ItemArrayInterface;
-      let newColumns = {} as ColumnInterface;
-
-      Object.keys(plan.week).forEach((day) => {
-        let meals = [] as meals;
-        // @ts-ignore
-        plan.week[day].meals.forEach((meal) => {
-          meals.push(meal);
-
-          newItems.push({
-            id: meal.id,
-            title: meal.title,
-          });
+      // checking if the meal plan already exists
+      console.log(regenerate);
+      const storedMealPlan = localStorage.getItem("mealPlan");
+      let blankPlan = {
+        items: [],
+        columns: {
+          UNPLANNED: [],
+          MONDAY: [],
+          TUESDAY: [],
+          WEDNESDAY: [],
+          THURSDAY: [],
+          FRIDAY: [],
+          SATURDAY: [],
+          SUNDAY: [],
+        },
+      }
+      console.log(storedMealPlan);
+      console.log(Object.is(storedMealPlan, blankPlan));
+      if (!Object.is(storedMealPlan, blankPlan) && storedMealPlan) {
+        setState(JSON.parse(storedMealPlan));
+      } else if (!regenerate) {
+        // Api call to get a weekly meal plan based on calories and diet specified by the user
+        let calories = 2000;
+        let diet = "vegetarian";
+        let plan: any = await fetch('https://api.spoonacular.com/mealplanner/generate?apiKey=aae67d05b464460e9bd6d10b74fb0940&timeFrame=week&targetCalories=' + calories + '&diet=' + diet, {
+          method: 'GET',
+          redirect: 'follow'
         });
+        plan = await plan.json();
+        let newItems = [] as ItemArrayInterface;
+        let newColumns = {} as ColumnInterface;
 
-        newColumns.UNPLANNED = [];
-        newColumns[day.toUpperCase()] = meals.map((meal) => meal.id);
-      });
+        Object.keys(plan.week).forEach((day) => {
+          let meals = [] as meals;
+          // @ts-ignore
+          plan.week[day].meals.forEach((meal) => {
+            meals.push(meal);
 
-      setState({ items: newItems, columns: newColumns });
+            newItems.push({
+              id: meal.id,
+              title: meal.title,
+            });
+          });
+
+          newColumns.UNPLANNED = [];
+          newColumns[day.toUpperCase()] = meals.map((meal) => meal.id);
+        });
+        let newState = { items: newItems, columns: newColumns };
+        setState(newState);
+        // Saving the meal plan to local storage so that the user can access it when they come back to this page
+        localStorage.setItem("mealPlan", JSON.stringify(newState));
+      }
     }
     fetchMealPlan();
   }, [regenerate])
