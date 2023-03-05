@@ -363,9 +363,6 @@ export const getStaticProps: GetStaticProps<{
       `https://api.spoonacular.com/recipes/${recipeId}/information?includeNutrition=true&apiKey=${process.env.NEXT_PUBLIC_IMAGE_RECOGNITION_API_KEY}`
     );
     const recipe = res2.data;
-
-    console.log(recipe.nutrition.nutrients);
-
     const word_to_number: Record<string, number> = {
       zero: 0,
       one: 1,
