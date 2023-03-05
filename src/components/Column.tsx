@@ -19,12 +19,12 @@ const Column = ({ column, items }: any) => {
                   <a
                     // NEED TO ADD LINK HERE TO THE CORRESPONDING RECIPE...
                     href={`/recipes/${item.id}`}
-                    className="mb-1 flex h-[85px] bg-emerald-600 p-1.5 text-white shadow-md"
+                    className="cursor-pointer mb-1 flex h-[85px] bg-emerald-600 p-1.5 text-white shadow-md"
                     ref={draggableProvided.innerRef}
                     {...draggableProvided.draggableProps}
                     {...draggableProvided.dragHandleProps}
                   >
-                    <h3>{item.title}</h3>
+                    <h3 className="text-sm">{item.title}</h3>
                     <img
                       className="relative h-full max-w-max object-cover"
                       src={

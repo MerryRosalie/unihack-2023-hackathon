@@ -3,6 +3,8 @@ import { BLOCKED_PAGES } from "next/dist/shared/lib/constants";
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
+import { Dialog } from "@headlessui/react";
+import { number } from "zod";
 
 interface ItemInterface {
   id: number,
@@ -63,6 +65,9 @@ const reorderColumnList = (
 };
 
 const PlanTable = () => {
+  const [calories, setCalories] = useState<number>(2500);
+  const [diet, setDiet] = useState<string>('vegetarian');
+
   const [state, setState] = useState<StateInterface>({
     items: [],
     columns: {
@@ -78,12 +83,12 @@ const PlanTable = () => {
   });
 
   const [regenerate, setRegenerate] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
 
 
   useEffect(() => {
-    const fetchMealPlan = async () => {
+    const fetchMealPlan = async (calories: number, diet: string) => {
       // checking if the meal plan already exists
-      console.log(regenerate);
       const storedMealPlan = localStorage.getItem("mealPlan");
       let blankPlan = {
         items: [],
@@ -100,17 +105,19 @@ const PlanTable = () => {
       }
       console.log(storedMealPlan);
       console.log(Object.is(storedMealPlan, blankPlan));
-      if (!Object.is(storedMealPlan, blankPlan) && storedMealPlan) {
+      if (!Object.is(storedMealPlan, blankPlan) && storedMealPlan && submitted) {
         setState(JSON.parse(storedMealPlan));
       } else {
         // Api call to get a weekly meal plan based on calories and diet specified by the user
-        let calories = 2000;
-        let diet = "vegetarian";
-        let plan: any = await fetch('https://api.spoonacular.com/mealplanner/generate?apiKey=aae67d05b464460e9bd6d10b74fb0940&timeFrame=week&targetCalories=' + calories + '&diet=' + diet, {
+        console.log(calories, diet);
+        // Api call to get a weekly meal plan based on calories and diet specified by the user
+        let plan: any = await fetch('https://api.spoonacular.com/mealplanner/generate?apiKey=89df64aea10245a2a1e2d10887ea7c3d&timeFrame=week&targetCalories=' + calories + '&diet=' + diet, {
           method: 'GET',
           redirect: 'follow'
         });
         plan = await plan.json();
+        console.log(plan);
+
         let newItems = [] as ItemArrayInterface;
         let newColumns = {} as ColumnInterface;
 
@@ -131,11 +138,12 @@ const PlanTable = () => {
         });
         let newState = { items: newItems, columns: newColumns };
         setState(newState);
+        setSubmitted(() => !submitted);
         // Saving the meal plan to local storage so that the user can access it when they come back to this page
         localStorage.setItem("mealPlan", JSON.stringify(newState));
       }
     }
-    fetchMealPlan();
+    fetchMealPlan(calories, diet);
   }, [regenerate])
 
   const onDragEnd = (result: any) => {
@@ -193,6 +201,58 @@ const PlanTable = () => {
 
   return (
     <>
+      <div className="flex flex-wrap items-center justify-center">
+        <div className="w-full max-w-md">
+          <form>
+            <div className="mb-6">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Target Daily Calories
+              </label>
+              <input
+                type="number"
+                name="calories"
+                value={calories}
+                onChange={(e) =>
+                  setCalories(parseInt(e.target.value))
+                }
+                min="1"
+                max="10000"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              />
+            </div>
+            <div className="mb-6">
+              <label className="block text-gray-700 text-sm font-bold mb-2">
+                Dietary Restrictions
+              </label>
+              <select
+                className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                value={diet}
+                onChange={(e) => setDiet(e.target.value)}
+              >
+                <option value="whole30">Whole30</option>
+                <option value="paleo">Paleo</option>
+                <option value="ketogenic">Ketogenic</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="gluten-free">Gluten Free</option>
+              </select>
+            </div>
+            <div className="flex items-center justify-center">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setRegenerate(!regenerate);
+                  localStorage.setItem("mealPlan", "");
+                }}
+                className="bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="submit"
+              >
+                Regenerate Meal Plan
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="m-auto flex p-4">
           {Object.keys(state.columns).map((column) => {
@@ -203,11 +263,6 @@ const PlanTable = () => {
           })}
         </div>
       </DragDropContext>
-      <div className="flex justify-center">
-        <button onClick={() => setRegenerate(!regenerate)} className="py-2 px-4 bg-emerald-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
-          Regenerate plan!
-        </button>
-      </div>
     </>
   );
 };
