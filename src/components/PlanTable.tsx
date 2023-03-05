@@ -1,16 +1,17 @@
+import { Console } from "console";
 import dynamic from "next/dynamic";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
 
 interface ItemInterface {
   id: number,
-  content: string
+  title: string
 }
 
 type ItemArrayInterface = ItemInterface[];
 
 interface ColumnInterface {
-  RECOMMENDED: Number[];
+  UNPLANNED: Number[];
   MONDAY: Number[];
   TUESDAY: Number[];
   WEDNESDAY: Number[];
@@ -21,8 +22,28 @@ interface ColumnInterface {
   [key: string]: any;
 }
 
+interface meal {
+  id: number,
+  imageType: string,
+  title: string,
+  readyInMinutes: number,
+  servings: number,
+}
+
+type meals = meal[];
+
+interface weeklyMeals {
+  monday: meals,
+  tuesday: meals,
+  wednesday: meals,
+  thursday: meals,
+  friday: meals,
+  saturday: meals,
+  sunday: meals,
+}
+
 interface StateInterface {
-  items: ItemArrayInterface,
+  items: ItemArrayInterface | meals,
   columns: ColumnInterface
 }
 
@@ -43,14 +64,14 @@ const reorderColumnList = (
 const PlanTable = () => {
   const [state, setState] = useState<StateInterface>({
     items: [
-      { id: 0, content: "Fried Rice" },
-      { id: 1, content: "Fried Rice" },
-      { id: 2, content: "Fried Rice" },
-      { id: 3, content: "Fried Rice" },
-      { id: 4, content: "Fried Rice" },
+      { id: 0, title: "Fried Rice" },
+      { id: 1, title: "Fried Rice" },
+      { id: 2, title: "Fried Rice" },
+      { id: 3, title: "Fried Rice" },
+      { id: 4, title: "Fried Rice" },
     ],
     columns: {
-      RECOMMENDED: [0, 1, 2, 3, 4],
+      UNPLANNED: [0, 1, 2, 3, 4],
       MONDAY: [],
       TUESDAY: [],
       WEDNESDAY: [],
@@ -60,6 +81,42 @@ const PlanTable = () => {
       SUNDAY: [],
     },
   });
+
+  const [regenerate, setRegenerate] = useState(true);
+
+  useEffect(() => {
+    const fetchMealPlan = async () => {
+      // Api call to get a weekly meal plan based on calories and diet specified by the user
+      let calories = 2000;
+      let diet = "vegetarian";
+      let plan: any = await fetch('https://api.spoonacular.com/mealplanner/generate?apiKey=aae67d05b464460e9bd6d10b74fb0940&timeFrame=week&targetCalories=' + calories + '&diet=' + diet, {
+        method: 'GET',
+        redirect: 'follow'
+      });
+      plan = await plan.json();
+      let newItems = [] as ItemArrayInterface;
+      let newColumns = {} as ColumnInterface;
+
+      Object.keys(plan.week).forEach((day) => {
+        let meals = [] as meals;
+        // @ts-ignore
+        plan.week[day].meals.forEach((meal) => {
+          meals.push(meal);
+
+          newItems.push({
+            id: meal.id,
+            title: meal.title,
+          });
+        });
+
+        newColumns.UNPLANNED = [];
+        newColumns[day.toUpperCase()] = meals.map((meal) => meal.id);
+      });
+
+      setState({ items: newItems, columns: newColumns });
+    }
+    fetchMealPlan();
+  }, [regenerate])
 
   const onDragEnd = (result: any) => {
     const { destination, source } = result;
@@ -115,16 +172,23 @@ const PlanTable = () => {
   };
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <div className="m-auto flex p-4">
-        {Object.keys(state.columns).map((column) => {
-          const items = state.columns[column].map((itemId: number) =>
-            state.items.find((item) => item.id === itemId)
-          );
-          return <Column key={column} column={column} items={items} />;
-        })}
+    <>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className="m-auto flex p-4">
+          {Object.keys(state.columns).map((column) => {
+            const items = state.columns[column].map((itemId: number) =>
+              state.items.find((item) => item.id === itemId)
+            );
+            return <Column key={column} column={column} items={items} />;
+          })}
+        </div>
+      </DragDropContext>
+      <div className="flex justify-center">
+        <button onClick={() => setRegenerate(!regenerate)} className="py-2 px-4 bg-emerald-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
+          Regenerate plan!
+        </button>
       </div>
-    </DragDropContext>
+    </>
   );
 };
 
