@@ -10,9 +10,10 @@ import { useEffect, useState } from "react";
 import Navbar from "~/components/Navbar";
 import Timer from "~/components/Timer";
 import React from "react";
-import { Recipe } from "~/types/Recipe";
+import { Recipe, RecipeSchema } from "~/types/Recipe";
 import recipes from "~/recipes.json";
 import Head from "next/head";
+import axios from "axios";
 
 type IngredientsState = (boolean | "disabled" | undefined)[];
 
@@ -351,7 +352,64 @@ export const getStaticProps: GetStaticProps<{
   const recipeId = context.params?.recipeId as string;
 
   // Get corresponding recipe from recipes json file
-  const recipeObj = recipes.find((recipe) => recipe.id === recipeId) as Recipe;
+  let recipeObj = recipes.find((recipe) => recipe.id === recipeId);
+
+  if (!recipeObj) {
+    const res = await axios.get(
+      `https://api.spoonacular.com/recipes/${recipeId}/analyzedInstructions?stepBreakdown=false&apiKey=aae67d05b464460e9bd6d10b74fb0940`
+    );
+    const instructions = res.data[0].steps.map((step: any) => step.step);
+    const res2 = await axios.get(
+      `https://api.spoonacular.com/recipes/${recipeId}/information?includeNutrition=true&apiKey=aae67d05b464460e9bd6d10b74fb0940`
+    );
+    const recipe = res2.data;
+
+    console.log(recipe.nutrition.nutrients);
+
+    const word_to_number: Record<string, number> = {
+      zero: 0,
+      one: 1,
+      two: 2,
+      three: 3,
+      four: 4,
+      five: 5,
+      six: 6,
+      seven: 7,
+      eight: 8,
+      nine: 9,
+      ten: 10,
+    };
+
+    instructions.forEach((instruction: string, index: number) => {
+      const words = instruction.split(" ");
+      words.forEach((word, index) => {
+        if (word in word_to_number) {
+          words[index] = word_to_number[word]?.toString() as string;
+        }
+      });
+      instructions[index] = words.join(" ");
+    });
+
+    recipeObj = RecipeSchema.parse({
+      id: recipeId,
+      name: recipe.title,
+      image: recipe.image,
+      prep_time: 0,
+      cook_time: recipe.readyInMinutes,
+      servings: recipe.servings,
+      ingredients: recipe.extendedIngredients.map(
+        (ingredient: any) => ingredient.original
+      ),
+      instructions,
+      nutrition: {
+        calories: recipe.nutrition.nutrients[0].amount,
+        fat: recipe.nutrition.nutrients[1].amount,
+        carbs: recipe.nutrition.nutrients[3].amount,
+        protein: recipe.nutrition.nutrients[8].amount,
+      },
+      tags: [],
+    });
+  }
 
   return {
     props: {
