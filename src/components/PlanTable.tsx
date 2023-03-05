@@ -107,7 +107,7 @@ const PlanTable = () => {
         setState(JSON.parse(storedMealPlan));
       } else {
         // Api call to get a weekly meal plan based on calories and diet specified by the user
-        let plan: any = await fetch('https://api.spoonacular.com/mealplanner/generate?apiKey=${process.env.NEXT_PUBLIC_IMAGE_RECOGNITION_API_KEY}&timeFrame=week&targetCalories=' + calories + '&diet=' + diet, {
+        let plan: any = await fetch(`https://api.spoonacular.com/mealplanner/generate?apiKey=31dcd7099ee9440f9a325fc3009bb7f1` + "&timeFrame=week&targetCalories=" + calories + '&diet=' + diet, {
           method: 'GET',
           redirect: 'follow'
         });
