@@ -31,7 +31,7 @@ const Column = ({ column, items }: any) => {
                       className="relative my-auto aspect-video h-20 max-w-max object-cover"
                       src={
                         "https://spoonacular.com/recipeImages/" +
-                        item.id +
+                        item.actual_id +
                         "-312x231.jpg"
                       }
                     />
