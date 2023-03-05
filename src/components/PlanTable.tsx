@@ -8,6 +8,7 @@ import { number } from "zod";
 
 interface ItemInterface {
   id: number,
+  actual_id: number,
   title: string
 }
 
@@ -27,6 +28,7 @@ interface ColumnInterface {
 
 interface meal {
   id: number,
+  actual_id: number,
   imageType: string,
   title: string,
   readyInMinutes: number,
@@ -121,10 +123,12 @@ const PlanTable = () => {
           let meals = [] as meals;
           // @ts-ignore
           plan.week[day].meals.forEach((meal) => {
+            meal.actual_id = meal.id
             meal.id = counter;
             meals.push(meal);
             newItems.push({
               id: counter,
+              actual_id: meal.actual_id,
               title: meal.title,
             });
             counter++;
