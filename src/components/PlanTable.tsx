@@ -1,4 +1,4 @@
-import { Console } from "console";
+import { Console, count } from "console";
 import { BLOCKED_PAGES } from "next/dist/shared/lib/constants";
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
@@ -121,17 +121,20 @@ const PlanTable = () => {
         let newItems = [] as ItemArrayInterface;
         let newColumns = {} as ColumnInterface;
 
+        let counter = 1;
         Object.keys(plan.week).forEach((day) => {
           let meals = [] as meals;
           // @ts-ignore
           plan.week[day].meals.forEach((meal) => {
+            meal.id = counter;
             meals.push(meal);
-
             newItems.push({
-              id: meal.id,
+              id: counter,
               title: meal.title,
             });
+            counter++;
           });
+
 
           newColumns.UNPLANNED = [];
           newColumns[day.toUpperCase()] = meals.map((meal) => meal.id);
