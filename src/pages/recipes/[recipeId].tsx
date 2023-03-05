@@ -415,7 +415,7 @@ export const getStaticProps: GetStaticProps<{
     props: {
       recipeObj,
     },
-    revalidate: 1,
+    revalidate: 86400,
   };
 };
 
