@@ -8,7 +8,6 @@ import { number } from "zod";
 
 interface ItemInterface {
   id: number,
-  actual_id: number,
   title: string
 }
 
@@ -104,20 +103,15 @@ const PlanTable = () => {
           SUNDAY: [],
         },
       }
-      console.log(storedMealPlan);
-      console.log(Object.is(storedMealPlan, blankPlan));
       if (!Object.is(storedMealPlan, blankPlan) && storedMealPlan && submitted) {
         setState(JSON.parse(storedMealPlan));
       } else {
         // Api call to get a weekly meal plan based on calories and diet specified by the user
-        console.log(calories, diet);
-        // Api call to get a weekly meal plan based on calories and diet specified by the user
-        let plan: any = await fetch('https://api.spoonacular.com/mealplanner/generate?apiKey=89df64aea10245a2a1e2d10887ea7c3d&timeFrame=week&targetCalories=' + calories + '&diet=' + diet, {
+        let plan: any = await fetch('https://api.spoonacular.com/mealplanner/generate?apiKey=${process.env.NEXT_PUBLIC_IMAGE_RECOGNITION_API_KEY}&timeFrame=week&targetCalories=' + calories + '&diet=' + diet, {
           method: 'GET',
           redirect: 'follow'
         });
         plan = await plan.json();
-        console.log(plan);
 
         let newItems = [] as ItemArrayInterface;
         let newColumns = {} as ColumnInterface;
@@ -131,7 +125,6 @@ const PlanTable = () => {
             meals.push(meal);
             newItems.push({
               id: counter,
-              actual_id: meal.id,
               title: meal.title,
             });
             counter++;

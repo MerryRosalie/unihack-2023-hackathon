@@ -18,7 +18,7 @@ const Column = ({ column, items }: any) => {
                 {(draggableProvided: any, draggableSnapshot) => (
                   <a
                     // NEED TO ADD LINK HERE TO THE CORRESPONDING RECIPE...
-                    href={`/recipes/${item.actual_id}`}
+                    href={`/recipes/${item.id}`}
                     className="mb-3 flex justify-between overflow-hidden rounded bg-emerald-100 text-white shadow-md transition-transform hover:-translate-y-px"
                     ref={draggableProvided.innerRef}
                     {...draggableProvided.draggableProps}
