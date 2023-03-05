@@ -8,6 +8,7 @@ import { number } from "zod";
 
 interface ItemInterface {
   id: number,
+  actual_id: number,
   title: string
 }
 
@@ -130,6 +131,7 @@ const PlanTable = () => {
             meals.push(meal);
             newItems.push({
               id: counter,
+              actual_id: meal.id,
               title: meal.title,
             });
             counter++;
