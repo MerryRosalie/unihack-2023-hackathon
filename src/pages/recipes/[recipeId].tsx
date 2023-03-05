@@ -356,11 +356,11 @@ export const getStaticProps: GetStaticProps<{
 
   if (!recipeObj) {
     const res = await axios.get(
-      `https://api.spoonacular.com/recipes/${recipeId}/analyzedInstructions?stepBreakdown=false&apiKey=aae67d05b464460e9bd6d10b74fb0940`
+      `https://api.spoonacular.com/recipes/${recipeId}/analyzedInstructions?stepBreakdown=false&apiKey=${process.env.NEXT_PUBLIC_IMAGE_RECOGNITION_API_KEY}`
     );
     const instructions = res.data[0].steps.map((step: any) => step.step);
     const res2 = await axios.get(
-      `https://api.spoonacular.com/recipes/${recipeId}/information?includeNutrition=true&apiKey=aae67d05b464460e9bd6d10b74fb0940`
+      `https://api.spoonacular.com/recipes/${recipeId}/information?includeNutrition=true&apiKey=${process.env.NEXT_PUBLIC_IMAGE_RECOGNITION_API_KEY}`
     );
     const recipe = res2.data;
 
