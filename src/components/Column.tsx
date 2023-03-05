@@ -19,14 +19,16 @@ const Column = ({ column, items }: any) => {
                   <a
                     // NEED TO ADD LINK HERE TO THE CORRESPONDING RECIPE...
                     href={`/recipes/${item.id}`}
-                    className="mb-1 flex h-[85px] bg-emerald-600 p-1.5 text-white shadow-md"
+                    className="mb-2 flex justify-between bg-emerald-100 text-white shadow-md"
                     ref={draggableProvided.innerRef}
                     {...draggableProvided.draggableProps}
                     {...draggableProvided.dragHandleProps}
                   >
-                    <h3>{item.title}</h3>
+                    <h3 className="m-2 text-sm font-semibold text-emerald-700 line-clamp-3">
+                      {item.title}
+                    </h3>
                     <img
-                      className="relative h-full max-w-max object-cover"
+                      className="relative my-auto aspect-video h-20 max-w-max object-cover"
                       src={
                         "https://spoonacular.com/recipeImages/" +
                         item.id +
